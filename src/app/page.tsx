@@ -2,7 +2,7 @@
 
 import { UserButton } from '@/features/auth/components/UserButton';
 import { useCreateWorkspaceModal } from '@/features/workspaces/store/useCreateWorkspaceModal';
-import { useGetWorkspaces } from '@/features/workspaces/useGetWorkspaces';
+import { useGetWorkspaces } from '@/features/workspaces/api/useGetWorkspaces';
 import { useEffect, useMemo } from 'react';
 
 export default function Home() {
