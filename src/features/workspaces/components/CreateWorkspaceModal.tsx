@@ -11,9 +11,11 @@ import {
 import { useCreateWorkspaceModal } from '../store/useCreateWorkspaceModal';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { useCreateWorkspace } from '../api/useCreateWorkspace';
 
 export const CreateWorkspaceModal = () => {
   const [open, setOpen] = useCreateWorkspaceModal();
+  const {} = useCreateWorkspace();
 
   const handleClose = () => {
     setOpen(false);
