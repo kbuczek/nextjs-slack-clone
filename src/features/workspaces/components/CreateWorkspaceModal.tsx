@@ -15,11 +15,17 @@ import { useCreateWorkspace } from '../api/useCreateWorkspace';
 
 export const CreateWorkspaceModal = () => {
   const [open, setOpen] = useCreateWorkspaceModal();
-  const {} = useCreateWorkspace();
+  const { mutate } = useCreateWorkspace();
 
   const handleClose = () => {
     setOpen(false);
     // TODO: clear form
+  };
+
+  const handleSubmit = () => {
+    mutate({
+      name: 'Workspace 1',
+    });
   };
 
   return (
