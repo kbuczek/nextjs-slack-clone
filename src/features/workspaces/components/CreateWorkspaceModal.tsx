@@ -22,10 +22,15 @@ export const CreateWorkspaceModal = () => {
     // TODO: clear form
   };
 
-  const handleSubmit = () => {
-    mutate({
-      name: 'Workspace 1',
-    });
+  const handleSubmit = async () => {
+    const data = await mutate(
+      {
+        name: 'Workspace 1',
+      },
+      {
+        onSuccess(data) {},
+      }
+    );
   };
 
   return (
