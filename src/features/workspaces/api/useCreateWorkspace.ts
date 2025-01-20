@@ -1,10 +1,10 @@
 import { useMutation } from 'convex/react';
 import { api } from '../../../../convex/_generated/api';
-import { useCallback } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { Id } from '../../../../convex/_generated/dataModel';
 
 type RequestType = { name: string };
-type ResponseType = Id<'workspaces'>;
+type ResponseType = Id<'workspaces'> | null;
 
 type Options = {
   onSuccess?: (data: ResponseType) => void;
@@ -14,11 +14,33 @@ type Options = {
 };
 
 export const useCreateWorkspace = () => {
+  const [data, setData] = useState<ResponseType>(null);
+  const [error, setError] = useState<Error | null>(null);
+  const [status, setStatus] = useState<
+    'success' | 'pending' | 'error' | 'settled' | null
+  >(null);
+
+  // const [isPending, setIsPending] = useState(false);
+  // const [isSuccess, setIsSuccess] = useState(false);
+  // const [isError, setIsError] = useState(false);
+  // const [isSettled, setIsSettled] = useState(false);
+
+  const isPending = useMemo(() => status === 'pending', [status]);
+  const isSuccess = useMemo(() => status === 'success', [status]);
+  const isError = useMemo(() => status === 'error', [status]);
+  const isSettled = useMemo(() => status === 'settled', [status]);
   const mutation = useMutation(api.workspaces.create);
 
   const mutate = useCallback(
     async (values: RequestType, options?: Options) => {
       try {
+        setData(null);
+        setError(null);
+        setIsSuccess(false);
+        setIsError(false);
+        setIsSettled(false);
+        setIsPending(true);
+
         const response = await mutation(values);
         options?.onSuccess?.(response);
         return response;
@@ -28,11 +50,13 @@ export const useCreateWorkspace = () => {
           throw error;
         }
       } finally {
+        setIsPending(false);
+        setIsSettled(true);
         options?.onSettled?.();
       }
     },
     [mutation]
   );
 
-  return { mutate };
+  return { mutate, data, error, isPending, isSuccess, isError, isSettled };
 };
