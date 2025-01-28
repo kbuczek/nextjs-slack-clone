@@ -3,32 +3,39 @@
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
+  // DialogTrigger,
 } from '@/components/ui/dialog';
 import { useCreateWorkspaceModal } from '../store/useCreateWorkspaceModal';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useCreateWorkspace } from '../api/useCreateWorkspace';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 export const CreateWorkspaceModal = () => {
+  const router = useRouter();
   const [open, setOpen] = useCreateWorkspaceModal();
-  const { mutate } = useCreateWorkspace();
+  const [name, setName] = useState('');
+  const { mutate, isPending } = useCreateWorkspace();
 
   const handleClose = () => {
     setOpen(false);
-    // TODO: clear form
+    setName('');
   };
 
-  const handleSubmit = async () => {
-    const data = await mutate(
+  const handleSubmit = async (e: React.FormEvent<HTMLElement>) => {
+    e.preventDefault();
+    mutate(
+      { name: name },
       {
-        name: 'Workspace 1',
-      },
-      {
-        onSuccess(data) {},
+        onSuccess(workspaceId) {
+          toast.success('Workspace created!');
+          router.push(`/workspace/${workspaceId}`);
+          handleClose();
+        },
       }
     );
   };
@@ -39,17 +46,20 @@ export const CreateWorkspaceModal = () => {
         <DialogHeader>
           <DialogTitle>Workspace modal</DialogTitle>
         </DialogHeader>
-        <form className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4">
           <Input
-            value=""
-            disabled={false}
+            value={name}
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
+            disabled={isPending}
             required
             autoFocus
             minLength={3}
             placeholder="Workspace name eg. 'Work', 'Personal, 'Home'"
           />
           <div className="flex justify-end">
-            <Button disabled={false}>Create</Button>
+            <Button disabled={isPending}>Create</Button>
           </div>
         </form>
       </DialogContent>
