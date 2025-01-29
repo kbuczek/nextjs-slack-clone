@@ -1,5 +1,5 @@
 'use client';
-import { useParams } from 'next/navigation';
+import { useWorkspaceId } from '@/hooks/useWorkspaceId';
 
 // type Params = Promise<{ workspaceId: string }>;
 
@@ -9,6 +9,7 @@ import { useParams } from 'next/navigation';
 // }
 
 export default function WorkspaceIdPage() {
-  const params = useParams();
-  return <div>ID: {params.workspaceId}</div>;
+  const workspaceId = useWorkspaceId();
+
+  return <div>ID: {workspaceId}</div>;
 }

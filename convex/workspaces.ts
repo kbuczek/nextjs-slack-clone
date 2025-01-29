@@ -32,3 +32,19 @@ export const get = query({
     return await ctx.db.query('workspaces').collect(); //get all data from workspaces table
   },
 });
+
+export const getById = query({
+  args: {
+    id: v.id('workspaces'),
+  },
+  handler: async (ctx, args) => {
+    const userId = await getAuthUserId(ctx);
+
+    if (!userId) {
+      throw new Error('Unauthorized');
+    }
+
+    // TODO: check if userId belongs to workspaceId
+    return await ctx.db.get(args.id);
+  },
+});
