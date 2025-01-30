@@ -1,4 +1,5 @@
 'use client';
+import { useGetWorkspace } from '@/features/workspaces/api/useGetWorkspace';
 import { useWorkspaceId } from '@/hooks/useWorkspaceId';
 
 // type Params = Promise<{ workspaceId: string }>;
@@ -10,6 +11,7 @@ import { useWorkspaceId } from '@/hooks/useWorkspaceId';
 
 export default function WorkspaceIdPage() {
   const workspaceId = useWorkspaceId();
+  const { data } = useGetWorkspace({ id: workspaceId });
 
-  return <div>ID: {workspaceId}</div>;
+  return <div>Data: {JSON.stringify(data)}</div>;
 }
