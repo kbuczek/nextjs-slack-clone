@@ -1,3 +1,4 @@
+'use client';
 import { Toolbar } from './toolbar';
 
 type WorkspaceIdLayoutProps = {
