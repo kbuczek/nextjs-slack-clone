@@ -1,6 +1,5 @@
 'use client';
 
-import { UserButton } from '@/features/auth/components/UserButton';
 import { useCreateWorkspaceModal } from '@/features/workspaces/store/useCreateWorkspaceModal';
 import { useGetWorkspaces } from '@/features/workspaces/api/useGetWorkspaces';
 import { useEffect, useMemo } from 'react';
@@ -25,9 +24,5 @@ export default function Home() {
     }
   }, [workspaceId, isLoading, open, setOpen, router]);
 
-  return (
-    <div>
-      <UserButton />
-    </div>
-  );
+  return <div>{/* <UserButton /> */}</div>;
 }

@@ -5,9 +5,10 @@ import { Info, Search } from 'lucide-react';
 
 export const Toolbar = () => {
   const workspaceId = useWorkspaceId();
+  // data will be cached by convex, you can use useGetWorkspace in multiple places
   const { data } = useGetWorkspace({ id: workspaceId });
   return (
-    <nav className="bg-[#481349] flex items-center justify-between h-10 p-1.5">
+    <nav className="bg-slackPurple flex items-center justify-between h-10 p-1.5">
       <div className="flex-1"></div>
       <div className="min-w-[280px] max-w-[642px] grow-[2] shrink">
         <Button

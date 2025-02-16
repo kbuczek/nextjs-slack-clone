@@ -51,6 +51,7 @@ export default {
           '4': 'hsl(var(--chart-4))',
           '5': 'hsl(var(--chart-5))',
         },
+        slackPurple: '#481349',
       },
       borderRadius: {
         lg: 'var(--radius)',
